@@ -1,0 +1,42 @@
+pub mod day_1 {
+    pub fn sum_consecutive_pairs(xs: &[i64]) -> i64 {
+        sum_offset_pairs(xs, 1)
+    }
+
+    pub fn sum_circular_pairs(xs: &[i64]) -> i64 {
+        sum_offset_pairs(xs, xs.len() / 2)
+    }
+
+    fn sum_offset_pairs(xs: &[i64], offset: usize) -> i64 {
+        let mut sum = 0;
+        for (i, x) in xs.iter().enumerate() {
+            let other = xs[(i + offset) % xs.len()];
+            if *x == other {
+                sum += x;
+            }
+        }
+        return sum;
+    }
+}
+
+#[cfg(test)]
+mod day_1_tests {
+    use super::*;
+
+    #[test]
+    fn test_sum_consecutive_pairs() {
+        assert_eq!(3, sum_consecutive_pairs(&[1, 1, 2, 2]));
+        assert_eq!(4, sum_consecutive_pairs(&[1, 1, 1, 1]));
+        assert_eq!(0, sum_consecutive_pairs(&[1, 2, 3, 4]));
+        assert_eq!(9, sum_consecutive_pairs(&[9, 1, 2, 1, 2, 1, 2, 9]));
+    }
+
+    #[test]
+    fn test_sum_circular_pairs() {
+        assert_eq!(6, sum_circular_pairs(&[1, 2, 1, 2]));
+        assert_eq!(0, sum_circular_pairs(&[1, 2, 2, 1]));
+        assert_eq!(4, sum_circular_pairs(&[1, 2, 3, 4, 2, 5]));
+        assert_eq!(12, sum_circular_pairs(&[1, 2, 3, 1, 2, 3]));
+        assert_eq!(4, sum_circular_pairs(&[1, 2, 1, 3, 1, 4, 1, 5]));
+    }
+}
