@@ -52,7 +52,7 @@ pub fn first_div(xs: &[f64]) -> Option<f64> {
     return None;
 }
 
-    #[cfg(test)]
+#[cfg(test)]
 mod tests {
     use super::*;
 
